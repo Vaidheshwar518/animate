@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Story Animator — Text to 3D Scenes</title>
+    <meta name="description" content="Paste a story or prompt, split into scenes, render 3D animations, and export as WebM video (up to 120 minutes)." />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <aside class="sidebar">
+        <h1>Story Animator</h1>
+        <p class="tagline">Turn your story into stylized 3D animated scenes.</p>
+
+        <div class="field">
+          <label for="storyInput">Story / Prompt</label>
+          <textarea id="storyInput" rows="12" placeholder="Paste or type your story here. Separate scenes with blank lines for best results."></textarea>
+          <div class="examples">
+            <button class="example" data-id="example-epic">Epic quest</button>
+            <button class="example" data-id="example-scifi">Sci‑fi chase</button>
+            <button class="example" data-id="example-noir">Noir mystery</button>
+            <button class="example" data-id="example-pixel">Pixel world</button>
+            <button class="example" data-id="example-fantasy">Fantasy forest</button>
+            <button class="example" data-id="example-space">Space odyssey</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="styleSelect">Style Preset</label>
+            <select id="styleSelect">
+              <option value="cinematic">Cinematic</option>
+              <option value="movie">Movie</option>
+              <option value="pixel">Pixel</option>
+              <option value="toon">Toon</option>
+              <option value="noir">Noir</option>
+              <option value="vaporwave">Vaporwave</option>
+              <option value="scifi">Sci‑Fi Neon</option>
+              <option value="fantasy">Fantasy</option>
+              <option value="retro">Retro Sepia</option>
+              <option value="comic">Comic</option>
+              <option value="human">Human</option>
+              <option value="minimal">Minimal</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="fpsInput">FPS</label>
+            <input id="fpsInput" type="number" min="12" max="60" step="1" value="30" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="durationPerScene">Seconds per Scene</label>
+            <input id="durationPerScene" type="number" min="3" max="120" step="1" value="8" />
+          </div>
+          <div class="field">
+            <label for="maxMinutes">Max Total Minutes</label>
+            <input id="maxMinutes" type="number" min="1" max="120" step="1" value="120" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="resolutionSelect">Resolution</label>
+            <select id="resolutionSelect">
+              <option value="1280x720">1280×720 (HD)</option>
+              <option value="1920x1080">1920×1080 (Full HD)</option>
+              <option value="2560x1440">2560×1440 (QHD)</option>
+              <option value="3840x2160">3840×2160 (4K)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="seedInput">Random Seed</label>
+            <input id="seedInput" type="number" min="0" max="999999" step="1" value="1234" />
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="generateBtn" class="primary">Generate Scenes</button>
+          <button id="previewBtn">Preview</button>
+          <button id="recordBtn">Render & Export</button>
+        </div>
+
+        <div class="hint">Recording exports as WebM in‑browser. Long exports may be large. Total duration is capped at 120 minutes.</div>
+
+        <div class="scenes">
+          <h2>Scenes</h2>
+          <ol id="sceneList"></ol>
+          <div id="durationSummary" class="duration"></div>
+        </div>
+
+        <footer>
+          <span>Made with Three.js. No server required.</span>
+        </footer>
+      </aside>
+
+      <main class="stage">
+        <div class="stage-header">
+          <span id="status">Idle</span>
+          <a id="downloadLink" class="hidden" download="story-animator.webm">Download Video</a>
+        </div>
+        <div class="canvas-wrap">
+          <canvas id="viewport"></canvas>
+          <div id="letterbox" class="letterbox hidden"></div>
+        </div>
+      </main>
+    </div>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
